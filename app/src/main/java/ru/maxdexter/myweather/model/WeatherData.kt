@@ -1,5 +1,6 @@
 package ru.maxdexter.myweather.model
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class WeatherData(
     @SerializedName("alerts")
@@ -20,4 +21,4 @@ data class WeatherData(
     val timezone: String,
     @SerializedName("timezone_offset")
     val timezoneOffset: Int
-)
+) : Serializable

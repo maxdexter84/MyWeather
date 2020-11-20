@@ -7,17 +7,20 @@ import androidx.navigation.NavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import ru.maxdexter.myweather.model.Current
 import ru.maxdexter.myweather.model.Weather
+import ru.maxdexter.myweather.model.WeatherData
 import ru.maxdexter.myweather.ui.fragments.currentwearher.CurrentWeatherFragment
 import ru.maxdexter.myweather.ui.fragments.tomorrow.TomorrowFragment
 import ru.maxdexter.myweather.ui.fragments.viewpagerfragment.ViewPagerFragmentDirections
 
-class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, private val weather: Current) : FragmentStateAdapter(fragmentManager, lifecycle) {
+class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,private val weather: WeatherData) : FragmentStateAdapter(fragmentManager, lifecycle) {
+
+
     override fun getItemCount(): Int {
         return 3
     }
 
     override fun createFragment(position: Int): Fragment = when(position){
-        0 -> CurrentWeatherFragment.newInstance(weather)
+        0 -> CurrentWeatherFragment.newInstance(weather.current)
         else -> TomorrowFragment.newInstance()
     }
 

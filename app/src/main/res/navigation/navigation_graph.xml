@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_graph.xml"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph.xml"
     app:startDestination="@id/viewPagerFragment">
 
     <fragment
@@ -10,9 +12,32 @@
         <action
             android:id="@+id/action_viewPagerFragment_to_currentWeatherFragment"
             app:destination="@id/currentWeatherFragment" />
+        <argument
+            android:name="weather"
+            app:argType="ru.maxdexter.myweather.model.WeatherData" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_tomorrowFragment"
+            app:destination="@id/tomorrowFragment" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_tenDaysWeatherFragment"
+            app:destination="@id/tenDaysWeatherFragment" />
     </fragment>
     <fragment
         android:id="@+id/currentWeatherFragment"
         android:name="ru.maxdexter.myweather.ui.fragments.currentwearher.CurrentWeatherFragment"
         android:label="CurrentWeatherFragment" />
+    <action android:id="@+id/action_global_viewPagerFragment" app:destination="@id/viewPagerFragment" />
+    <fragment
+        android:id="@+id/tenDaysWeatherFragment"
+        android:name="ru.maxdexter.myweather.ui.fragments.TenDaysWeatherFragment"
+        android:label="ten_days_weather_fragment"
+        tools:layout="@layout/ten_days_weather_fragment" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="ru.maxdexter.myweather.ui.MainActivity"
+        android:label="MainActivity" />
+    <fragment
+        android:id="@+id/tomorrowFragment"
+        android:name="ru.maxdexter.myweather.ui.fragments.tomorrow.TomorrowFragment"
+        android:label="TomorrowFragment" />
 </navigation>

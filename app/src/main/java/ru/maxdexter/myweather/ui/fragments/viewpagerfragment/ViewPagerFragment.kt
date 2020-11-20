@@ -4,19 +4,52 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
+import ru.maxdexter.myweather.LoadData
 import ru.maxdexter.myweather.R
+import ru.maxdexter.myweather.adapters.ViewPagerAdapter
+import ru.maxdexter.myweather.databinding.FragmentVewPagerBinding
+import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.ui.fragments.currentwearher.CurrentWeatherFragment
+import ru.maxdexter.myweather.ui.fragments.tomorrow.TomorrowFragment
 
-class ViewPagerFragment : Fragment(R.layout.fragment_vew_pager) {
-
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val viewPager2 = view.findViewById(R.id.view_pager) as ViewPager2
+class ViewPagerFragment : Fragment() {
 
 
+    private var adapter: ViewPagerAdapter? = null
+    private lateinit var binding: FragmentVewPagerBinding
+    private val viewModel: PagerViewModel by lazy {
+        ViewModelProvider(this).get(PagerViewModel::class.java)
     }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val args = arguments?.let { ViewPagerFragmentArgs.fromBundle(it) }?.weather
+        val viewPagerAdapter = args?.let { ViewPagerAdapter(parentFragmentManager,lifecycle, it) }
+        binding.viewPager.adapter = viewPagerAdapter
+
+
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_vew_pager,container, false)
+
+        if (adapter != null) {
+            binding.viewPager.adapter = adapter
+        }
+
+        return binding.root
+    }
+
+
+
+
 }
