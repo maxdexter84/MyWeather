@@ -1,5 +1,8 @@
 package ru.maxdexter.myweather.model
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 data class Current(
     @SerializedName("clouds")
@@ -32,4 +35,4 @@ data class Current(
     val windDeg: Int,
     @SerializedName("wind_speed")
     val windSpeed: Double
-)
+) : Serializable
