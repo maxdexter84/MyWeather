@@ -1,6 +1,9 @@
 package ru.maxdexter.myweather.model
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class WeatherX(
     @SerializedName("description")
     val description: String,
@@ -10,4 +13,4 @@ data class WeatherX(
     val id: Int,
     @SerializedName("main")
     val main: String
-)
+) : Parcelable

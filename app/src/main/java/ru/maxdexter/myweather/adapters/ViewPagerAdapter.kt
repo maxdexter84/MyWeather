@@ -9,6 +9,7 @@ import ru.maxdexter.myweather.model.Current
 import ru.maxdexter.myweather.model.Weather
 import ru.maxdexter.myweather.model.WeatherData
 import ru.maxdexter.myweather.ui.fragments.currentwearher.CurrentWeatherFragment
+import ru.maxdexter.myweather.ui.fragments.tendays.TenDaysWeatherFragment
 import ru.maxdexter.myweather.ui.fragments.tomorrow.TomorrowFragment
 import ru.maxdexter.myweather.ui.fragments.viewpagerfragment.ViewPagerFragmentDirections
 
@@ -20,8 +21,9 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,pr
     }
 
     override fun createFragment(position: Int): Fragment = when(position){
-        0 -> CurrentWeatherFragment.newInstance(weather.current)
-        else -> TomorrowFragment.newInstance()
+        0 -> CurrentWeatherFragment.newInstance(weather)
+        1-> TomorrowFragment.newInstance(weather)
+        else -> TenDaysWeatherFragment.newInstance()
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.maxdexter.myweather.ui.fragments
+package ru.maxdexter.myweather.ui.fragments.tendays
 
 
 import android.os.Bundle

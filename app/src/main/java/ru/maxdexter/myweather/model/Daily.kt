@@ -1,27 +1,31 @@
 package ru.maxdexter.myweather.model
+import android.os.ParcelFileDescriptor
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Daily(
     @SerializedName("clouds")
     val clouds: Int,
     @SerializedName("dew_point")
     val dewPoint: Double,
     @SerializedName("dt")
-    val dt: Int,
+    val dt: Long,
     @SerializedName("feels_like")
     val feelsLike: FeelsLike,
     @SerializedName("humidity")
     val humidity: Int,
     @SerializedName("pop")
-    val pop: Int,
+    val pop: Double,
     @SerializedName("pressure")
-    val pressure: Int,
+    val pressure: Double,
     @SerializedName("snow")
     val snow: Double,
     @SerializedName("sunrise")
-    val sunrise: Int,
+    val sunrise: Long,
     @SerializedName("sunset")
-    val sunset: Int,
+    val sunset: Long,
     @SerializedName("temp")
     val temp: Temp,
     @SerializedName("uvi")
@@ -32,4 +36,4 @@ data class Daily(
     val windDeg: Int,
     @SerializedName("wind_speed")
     val windSpeed: Double
-)
+) : Parcelable

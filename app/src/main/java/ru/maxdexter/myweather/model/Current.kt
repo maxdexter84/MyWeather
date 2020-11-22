@@ -3,7 +3,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
-
+@Parcelize
 data class Current(
     @SerializedName("clouds")
     val clouds: Int,
@@ -35,4 +35,4 @@ data class Current(
     val windDeg: Int,
     @SerializedName("wind_speed")
     val windSpeed: Double
-) : Serializable
+) : Parcelable

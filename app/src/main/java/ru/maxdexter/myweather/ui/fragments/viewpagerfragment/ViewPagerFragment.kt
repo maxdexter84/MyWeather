@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,6 +20,7 @@ import ru.maxdexter.myweather.databinding.FragmentVewPagerBinding
 import ru.maxdexter.myweather.model.WeatherData
 import ru.maxdexter.myweather.ui.fragments.currentwearher.CurrentWeatherFragment
 import ru.maxdexter.myweather.ui.fragments.tomorrow.TomorrowFragment
+import ru.maxdexter.myweather.util.Location
 
 class ViewPagerFragment : Fragment() {
 
@@ -35,16 +37,21 @@ class ViewPagerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val args = arguments?.let { ViewPagerFragmentArgs.fromBundle(it) }?.weather
-        val viewPagerAdapter = args?.let { ViewPagerAdapter(parentFragmentManager,lifecycle, it) }
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vew_pager, container, false)
+        val args = arguments?.let { ViewPagerFragmentArgs.fromBundle(it) }
+        val viewPagerAdapter = args?.let { ViewPagerAdapter(parentFragmentManager,lifecycle, it.weather) }
         binding.viewPager.adapter = viewPagerAdapter
 
-
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_vew_pager,container, false)
-
-        if (adapter != null) {
-            binding.viewPager.adapter = adapter
-        }
+//        Toast.makeText(context, "PagerFragment", Toast.LENGTH_SHORT).show()
+//
+//        activity?.let { viewModel.getLocation(it) }
+//
+//        viewModel.coordinates.observe(viewLifecycleOwner, {coord ->
+//            if (coord != null) {
+//                Toast.makeText(context, "${coord.first} ${coord.second}", Toast.LENGTH_LONG).show()
+//            }
+//
+//        })
 
         return binding.root
     }

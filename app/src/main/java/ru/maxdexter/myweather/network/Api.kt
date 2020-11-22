@@ -15,7 +15,8 @@ interface Api {
         @Query("lat") lat: String,
         @Query("lon") lon: String,
         @Query("appid") apiKey: String = "073f40e104f2129961514beb51a721d2",
-        @Query("units") units: String = "metric"
+        @Query("units") units: String = "metric",
+        @Query("lang") lang: String = "ru"
     ):Deferred<WeatherData>
 
 

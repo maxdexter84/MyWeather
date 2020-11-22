@@ -1,6 +1,9 @@
 package ru.maxdexter.myweather.model
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Temp(
     @SerializedName("day")
     val day: Double,
@@ -14,4 +17,4 @@ data class Temp(
     val morn: Double,
     @SerializedName("night")
     val night: Double
-)
+) : Parcelable

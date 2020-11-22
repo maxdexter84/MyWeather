@@ -1,7 +1,9 @@
 package ru.maxdexter.myweather.model
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
-
+@Parcelize
 data class WeatherData(
     @SerializedName("alerts")
     val alerts: List<Alert>,
@@ -21,4 +23,4 @@ data class WeatherData(
     val timezone: String,
     @SerializedName("timezone_offset")
     val timezoneOffset: Int
-) : Serializable
+) : Parcelable

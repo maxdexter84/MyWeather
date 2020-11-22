@@ -11,31 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <EditText
-                android:id="@+id/et_search"
-                android:hint="@string/et_search_hint"
-                android:layout_marginEnd="@dimen/max_space_16dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.appcompat.widget.Toolbar>
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_main" />
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment_container"
-            android:name="android.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/navigation_graph"
-            app:defaultNavHost="true"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:navGraph="@navigation/navigation_graph" />
 
         <ProgressBar
             android:id="@+id/progress_circular"
