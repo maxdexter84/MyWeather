@@ -1,20 +1,32 @@
 package ru.maxdexter.myweather.ui
 
 import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.myweather.LoadData
 import ru.maxdexter.myweather.R
-import ru.maxdexter.myweather.adapters.ViewPagerAdapter
 import ru.maxdexter.myweather.databinding.ActivityMainBinding
 import ru.maxdexter.myweather.util.PERMISSION_REQUEST_CODE
 
@@ -23,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
+
+   private lateinit var locationManager: LocationManager
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,25 +44,55 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         val navController = navHostFragment.findNavController()
+        locationManager  = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
+        weatherDataObserve(navController)
 
-        viewModel.weatherData.observe(this, {weather->
-            when(weather){
+        viewModel.placeName.observe(this,{
+            it?.let { binding.etSearch.apply {
+                binding.etSearch.text.clear()
+                hint = it
+            } }
+        })
+
+        binding.ibSearch.setOnClickListener{
+          val s =  binding.etSearch.text
+            if (s != null) {
+                    if (s.length > 2) {
+                        showProgressBar()
+                        viewModel.searchPlace(s, baseContext)
+                        hideProgressBar()
+
+                    }
+                }
+        }
+
+    }
+
+
+
+
+    private fun weatherDataObserve(navController: NavController) {
+        viewModel.weatherData.observe(this, { weather ->
+            when (weather) {
                 is LoadData.Success -> {
                     hideProgressBar()
                     if (weather.data != null)
-                        navController.navigate(MainActivityDirections.actionGlobalViewPagerFragment(weather.data))
+                        navController.navigate(
+                            MainActivityDirections.actionGlobalViewPagerFragment(
+                                weather.data
+                            )
+                        )
                 }
-                is  LoadData.Error -> {
+                is LoadData.Error -> {
                     hideProgressBar()
-                    Snackbar.make(binding.root, weather.message.toString(), Snackbar.LENGTH_LONG).show()
-                    Log.i("INF",weather.message.toString() )
+                    Snackbar.make(binding.root, weather.message.toString(), Snackbar.LENGTH_LONG)
+                        .show()
+                    Log.i("INF", weather.message.toString())
                 }
-                is  LoadData.Loading -> showProgressBar()
-
+                is LoadData.Loading -> showProgressBar()
             }
         })
-
     }
 
     private fun hideProgressBar() {
@@ -58,10 +102,10 @@ class MainActivity : AppCompatActivity() {
         binding.progressCircular.visibility = View.VISIBLE
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.requestLocation(this)
-    }
+
+
+
+
 
 
     // Запрашиваем Permission’ы для геолокации
@@ -81,4 +125,18 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                viewModel.requestLocation(this, locationManager)
+            }
+        }
+    }
+
+
 }

@@ -2,7 +2,7 @@ package ru.maxdexter.myweather.extension
 
 import java.text.SimpleDateFormat
 import java.util.*
-const val DATE_TIME_FORMAT = "dd.MMM.yy HH:mm"
+const val DATE_TIME_FORMAT = "dd.MMM"
 fun Date.currentDate(date: Long?): String{
     var currentDate = ""
     if (date != null)

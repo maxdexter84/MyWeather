@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Minutely(
     @SerializedName("dt")
-    val dt: Int,
+    val dt: Long,
     @SerializedName("precipitation")
     val precipitation: Double
 ) : Parcelable

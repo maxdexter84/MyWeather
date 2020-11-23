@@ -14,9 +14,9 @@ data class WeatherData(
     @SerializedName("hourly")
     val hourly: List<Hourly>,
     @SerializedName("lat")
-    val lat: Int,
+    val lat: Double,
     @SerializedName("lon")
-    val lon: Int,
+    val lon: Double,
     @SerializedName("minutely")
     val minutely: List<Minutely>,
     @SerializedName("timezone")

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import ru.maxdexter.myweather.LoadData
 import ru.maxdexter.myweather.R
 import ru.maxdexter.myweather.adapters.ViewPagerAdapter
@@ -42,16 +43,14 @@ class ViewPagerFragment : Fragment() {
         val viewPagerAdapter = args?.let { ViewPagerAdapter(parentFragmentManager,lifecycle, it.weather) }
         binding.viewPager.adapter = viewPagerAdapter
 
-//        Toast.makeText(context, "PagerFragment", Toast.LENGTH_SHORT).show()
-//
-//        activity?.let { viewModel.getLocation(it) }
-//
-//        viewModel.coordinates.observe(viewLifecycleOwner, {coord ->
-//            if (coord != null) {
-//                Toast.makeText(context, "${coord.first} ${coord.second}", Toast.LENGTH_LONG).show()
-//            }
-//
-//        })
+
+        TabLayoutMediator(binding.tabsFragment, binding.viewPager) { tab, position ->
+            when(position) {
+                0 -> tab.text = "Сегодня"
+                1 -> tab.text = "Завтра"
+                2 -> tab.text = "10 дней"
+            }
+        }.attach()
 
         return binding.root
     }

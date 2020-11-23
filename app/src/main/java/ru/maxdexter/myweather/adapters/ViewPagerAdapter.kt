@@ -23,7 +23,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,pr
     override fun createFragment(position: Int): Fragment = when(position){
         0 -> CurrentWeatherFragment.newInstance(weather)
         1-> TomorrowFragment.newInstance(weather)
-        else -> TenDaysWeatherFragment.newInstance()
+        else -> TenDaysWeatherFragment.newInstance(weather)
     }
 
 }

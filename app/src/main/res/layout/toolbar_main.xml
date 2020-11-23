@@ -5,5 +5,12 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
+    app:menu="@menu/menu_search"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"/>
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditText
+        android:id="@+id/et_search"
+        android:hint="Название города"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.appcompat.widget.Toolbar>
