@@ -11,5 +11,9 @@ fun bindImage(imageView: ImageView,imgId: String?) {
     Log.i("IMAGE", url)
         Glide.with(imageView.context)
             .load(url)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_brocken_img))
             .into(imageView)
 }
