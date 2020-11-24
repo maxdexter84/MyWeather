@@ -6,19 +6,10 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -35,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
-
    private lateinit var locationManager: LocationManager
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,29 +37,48 @@ class MainActivity : AppCompatActivity() {
         locationManager  = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
         weatherDataObserve(navController)
-
-        viewModel.placeName.observe(this,{
-            it?.let { binding.etSearch.apply {
-                binding.etSearch.text.clear()
-                hint = it
-            } }
-        })
-
-        binding.ibSearch.setOnClickListener{
-          val s =  binding.etSearch.text
-            if (s != null) {
-                    if (s.length > 2) {
-                        showProgressBar()
-                        viewModel.searchPlace(s, baseContext)
-                        hideProgressBar()
-
-                    }
-                }
-        }
+        initSearch()
+        loadHistory()
 
     }
 
+    private fun loadHistory() {
+        viewModel.getAllHistory(this).observe(this, { history ->
+            val list = mutableListOf<String>()
+            history.forEach { list.add(it.name) }
+            binding.etSearch.setAdapter(
+                ArrayAdapter<String>(
+                    this,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    list
+                )
+            )
 
+        })
+    }
+
+    private fun initSearch() {
+        viewModel.placeName.observe(this, {
+            it?.let {
+                binding.etSearch.apply {
+                    binding.etSearch.text.clear()
+                    hint = it
+                }
+            }
+        })
+
+        binding.ibSearch.setOnClickListener {
+            val s = binding.etSearch.text
+            if (s != null) {
+                if (s.length > 2) {
+                    showProgressBar()
+                    viewModel.searchPlace(s, baseContext)
+                    hideProgressBar()
+
+                }
+            }
+        }
+    }
 
 
     private fun weatherDataObserve(navController: NavController) {

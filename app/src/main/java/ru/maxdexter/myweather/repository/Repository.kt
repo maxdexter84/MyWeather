@@ -20,7 +20,7 @@ object Repository {
         HistoryData.invoke(context).historyDao().delete(searchHistory)
     }
 
-    fun getAllHistory(context: Context): LiveData<SearchHistory>{
+    fun getAllHistory(context: Context): LiveData<List<SearchHistory>>{
         return HistoryData.invoke(context).historyDao().getAllHistory()
     }
 

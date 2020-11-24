@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
 import ru.maxdexter.myweather.LoadData
 import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.model.roommodel.SearchHistory
 import ru.maxdexter.myweather.repository.Repository
 import java.io.IOException
 import kotlin.coroutines.resume
@@ -41,7 +42,7 @@ class MainViewModel : ViewModel() {
         _weatherData.value = LoadData.Loading()
     }
 
-    private fun loadCurrentWeather(latLon: Pair<String, String>) {
+     fun loadCurrentWeather(latLon: Pair<String, String>) {
         uiScope.launch {
             val result = Repository.getDataFromApi(latLon.first,latLon.second)
             _weatherData.value = (handleWeatherData(result))
@@ -119,6 +120,8 @@ class MainViewModel : ViewModel() {
 
                     val addr = addresses[0].getAddressLine(0).split(",".toRegex()).toTypedArray()
                     val city = addr[2]
+                    val search = SearchHistory(name = city,lat = lat.toString(),lon = lon.toString())
+                    saveSearch(search, context)
                     continuation.resume(city)
                 }
 
@@ -138,10 +141,22 @@ class MainViewModel : ViewModel() {
                     _placeName.value = coords[0].locality.split(",")[0]
                     val lat = coords[0].latitude
                     val lon = coords[0].longitude
+                    val searchHistory = SearchHistory(name = name, lat = lat.toString(), lon = lon.toString())
+                    saveSearch(searchHistory, context)
                     continuation.resume(lat to lon)
                 }
             } catch (e: IOException) {
                 continuation.resumeWithException(e)
             }
         }
+
+    private  fun saveSearch(searchHistory: SearchHistory, context: Context){
+        uiScope.launch {
+            Repository.saveHistory(searchHistory,context)
+        }
+    }
+
+     fun getAllHistory(context: Context):LiveData<List<SearchHistory>> {
+        return Repository.getAllHistory(context)
+    }
 }

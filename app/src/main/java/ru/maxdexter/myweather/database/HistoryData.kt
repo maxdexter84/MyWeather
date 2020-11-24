@@ -4,8 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import ru.maxdexter.myweather.model.roommodel.SearchHistory
 
-@Database(entities = [HistoryData::class], version = 1)
+@Database(entities = [SearchHistory::class], version = 1)
 abstract class HistoryData: RoomDatabase() {
     abstract fun historyDao(): HistoryDao
 
