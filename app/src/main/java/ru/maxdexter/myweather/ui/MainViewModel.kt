@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import ru.maxdexter.myweather.LoadData
 import ru.maxdexter.myweather.model.WeatherData
@@ -43,10 +44,11 @@ class MainViewModel : ViewModel() {
     }
 
      fun loadCurrentWeather(latLon: Pair<String, String>) {
-        uiScope.launch {
+        viewModelScope.launch {
             val result = Repository.getDataFromApi(latLon.first,latLon.second)
             _weatherData.value = (handleWeatherData(result))
         }
+
     }
 
     private  fun handleWeatherData(result: WeatherData): LoadData<WeatherData>? {
@@ -88,7 +90,7 @@ class MainViewModel : ViewModel() {
             val lat = location.latitude // Широта
             val lon = location.longitude // Долгота
             loadCurrentWeather(lat.toString() to lon.toString())
-            uiScope.launch {
+            viewModelScope.launch() {
                 _placeName.value = getAddress(lat, lon,context)
             }
 
@@ -99,7 +101,7 @@ class MainViewModel : ViewModel() {
 
 
      fun searchPlace(s: Editable, context: Context){
-         uiScope.launch {
+         viewModelScope.launch(Dispatchers.IO) {
              if (s.length > 2) {
                  delay(1000)
                  val latLon = getCoordinates(s.toString(), context)
@@ -112,22 +114,25 @@ class MainViewModel : ViewModel() {
     //Получаем адрес по координатам
     suspend fun getAddress(lon: Double, lat: Double, context: Context): String =
         // Поскольку Geocoder работает по интернету, создаём отдельный поток
-        suspendCoroutine {continuation->
-            try {
-                val geocoder = Geocoder(context)
-                val addresses = geocoder.getFromLocation(lon, lat, 1)
-                if (addresses.size > 0){
+        withContext(Dispatchers.IO){
+            suspendCoroutine {continuation->
+                try {
+                    val geocoder = Geocoder(context)
+                    val addresses = geocoder.getFromLocation(lon, lat, 1)
+                    if (addresses.size > 0){
 
-                    val addr = addresses[0].getAddressLine(0).split(",".toRegex()).toTypedArray()
-                    val city = addr[2]
-                    val search = SearchHistory(name = city,lat = lat.toString(),lon = lon.toString())
-                    saveSearch(search, context)
-                    continuation.resume(city)
+                        val addr = addresses[0].getAddressLine(0).split(",".toRegex()).toTypedArray()
+                        val city = addr[2]
+                        val search = SearchHistory(name = city,lat = lat.toString(),lon = lon.toString())
+                        saveSearch(search, context)
+                        continuation.resume(city)
+                    }
+
+                } catch (e: IOException) {
+                    continuation.resumeWithException(e)
                 }
-
-            } catch (e: IOException) {
-                continuation.resumeWithException(e)
             }
+
         }
 
     //Получаем координаты по адресу

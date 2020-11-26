@@ -36,6 +36,8 @@ class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {
         return binding.root
     }
 
+
+
     private fun setData() {
         val args = requireArguments().getParcelable<WeatherData>("CURRENT_WEATHER")
         if (args != null) {

@@ -2,6 +2,8 @@ package ru.maxdexter.myweather.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import ru.maxdexter.myweather.database.HistoryData
 import ru.maxdexter.myweather.model.roommodel.SearchHistory
 import ru.maxdexter.myweather.network.ApiService
@@ -9,7 +11,10 @@ import ru.maxdexter.myweather.network.ApiService
 object Repository {
 
     suspend fun getDataFromApi(lat: String, lon: String )  =
-        ApiService.api.getWeatherAsync(lat,lon).await()
+        withContext(Dispatchers.IO){
+            ApiService.api.getWeatherAsync(lat,lon).await()
+        }
+
 
 
     suspend fun saveHistory(searchHistory: SearchHistory, context: Context) {
