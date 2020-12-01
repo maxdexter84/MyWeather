@@ -19,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 import ru.maxdexter.myweather.LoadData
 import ru.maxdexter.myweather.R
 import ru.maxdexter.myweather.databinding.ActivityMainBinding
+import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.ui.fragments.viewpagerfragment.ViewPagerFragment
 import ru.maxdexter.myweather.util.PERMISSION_REQUEST_CODE
 
 class MainActivity : AppCompatActivity() {
@@ -32,14 +34,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-        val navController = navHostFragment.findNavController()
+
+
         locationManager  = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         requestLocationPermissions()
-        weatherDataObserve(navController)
+
         initSearch()
         loadHistory()
 
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        weatherDataObserve(navController)
     }
 
     private fun loadHistory() {

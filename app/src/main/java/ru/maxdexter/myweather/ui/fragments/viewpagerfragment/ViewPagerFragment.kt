@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import ru.maxdexter.myweather.R
 import ru.maxdexter.myweather.adapters.ViewPagerAdapter
 import ru.maxdexter.myweather.databinding.FragmentVewPagerBinding
+import ru.maxdexter.myweather.model.WeatherData
 
 
 class ViewPagerFragment : Fragment() {
@@ -20,13 +21,22 @@ class ViewPagerFragment : Fragment() {
     private val viewModel: PagerViewModel by lazy {
         ViewModelProvider(this).get(PagerViewModel::class.java)
     }
+    companion object{
+        fun newInstance(weatherData: WeatherData): ViewPagerFragment{
+            val args = Bundle()
+            args.putParcelable("WEATHER", weatherData)
+            val fragment = ViewPagerFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_vew_pager, container, false)
         val args = arguments?.let { ViewPagerFragmentArgs.fromBundle(it) }
         val viewPagerAdapter = args?.let { ViewPagerAdapter(parentFragmentManager,lifecycle, it.weather) }
