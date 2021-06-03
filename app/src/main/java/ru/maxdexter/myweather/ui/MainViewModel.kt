@@ -12,10 +12,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
-import ru.maxdexter.myweather.LoadData
-import ru.maxdexter.myweather.model.WeatherData
-import ru.maxdexter.myweather.model.roommodel.SearchHistory
-import ru.maxdexter.myweather.repository.Repository
+import ru.maxdexter.myweather.domain.LoadData
+import ru.maxdexter.myweather.data.model.WeatherData
+import ru.maxdexter.myweather.data.model.roommodel.SearchHistory
+import ru.maxdexter.myweather.data.repository.Repository
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException

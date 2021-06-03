@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.maxdexter.myweather.R
-import ru.maxdexter.myweather.adapters.ViewPagerAdapter
+import ru.maxdexter.myweather.ui.adapters.ViewPagerAdapter
 import ru.maxdexter.myweather.databinding.FragmentVewPagerBinding
-import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.data.model.WeatherData
 
 
 class ViewPagerFragment : Fragment() {

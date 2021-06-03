@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import ru.maxdexter.myweather.R
 import ru.maxdexter.myweather.databinding.FragmentCurrentWeatherBinding
-import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.data.model.WeatherData
 import ru.maxdexter.myweather.util.setData
 
 class CurrentWeatherFragment : Fragment(R.layout.fragment_current_weather) {

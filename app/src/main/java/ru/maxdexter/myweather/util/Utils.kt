@@ -2,14 +2,13 @@ package ru.maxdexter.myweather.util
 
 import android.annotation.SuppressLint
 import androidx.databinding.ViewDataBinding
-import ru.maxdexter.myweather.R
 import ru.maxdexter.myweather.databinding.FragmentCurrentWeatherBinding
 import ru.maxdexter.myweather.databinding.TomorrowFragmentBinding
 import ru.maxdexter.myweather.databinding.WeatherCardItemBinding
-import ru.maxdexter.myweather.extension.bindImage
-import ru.maxdexter.myweather.extension.currentDate
-import ru.maxdexter.myweather.model.Daily
-import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.util.extension.bindImage
+import ru.maxdexter.myweather.util.extension.currentDate
+import ru.maxdexter.myweather.data.model.Daily
+import ru.maxdexter.myweather.data.model.WeatherData
 import java.util.*
 
 

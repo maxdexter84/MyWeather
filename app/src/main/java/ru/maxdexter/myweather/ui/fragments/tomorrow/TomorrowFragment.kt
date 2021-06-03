@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import ru.maxdexter.myweather.R
 import ru.maxdexter.myweather.databinding.TomorrowFragmentBinding
-import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.data.model.WeatherData
 import ru.maxdexter.myweather.util.setData
 
 class TomorrowFragment : Fragment() {

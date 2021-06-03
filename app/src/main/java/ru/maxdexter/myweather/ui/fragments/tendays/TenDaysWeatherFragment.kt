@@ -10,9 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.maxdexter.myweather.R
-import ru.maxdexter.myweather.adapters.WeatherRecyclerAdapter
+import ru.maxdexter.myweather.ui.adapters.WeatherRecyclerAdapter
 import ru.maxdexter.myweather.databinding.FragmentTenDaysWeatherBinding
-import ru.maxdexter.myweather.model.WeatherData
+import ru.maxdexter.myweather.data.model.WeatherData
 
 class TenDaysWeatherFragment : Fragment() {
 
